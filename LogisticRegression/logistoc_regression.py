@@ -7,6 +7,9 @@ class LogisticRegression:
         self.b = None
 
     def fit(self, X, y, alpha=0.01, num_iters=1000, lambda_=0.1):
+        """
+        regularization hyperparameter default = 0.1
+        """
         m = X.shape[0]
         self.w = np.zeros(X.shape[1])
         self.b = 0.0
