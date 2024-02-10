@@ -6,13 +6,14 @@ class LogisticRegression:
         self.w = None
         self.b = None
 
-    def fit(self, X, y, alpha=0.01, num_iters=1000, lambda_=0.1):
+    def fit(self, X, y, alpha=0.01, num_iters=1000, lambda_=0.1, verbose=False):
         """
         regularization hyperparameter default = 0.1
         """
         m = X.shape[0]
         self.w = np.zeros(X.shape[1])
         self.b = 0.0
+        self.verbose = verbose
 
         for _ in range(num_iters):
             z = X @ self.w + self.b
@@ -20,6 +21,10 @@ class LogisticRegression:
             error = g - y
             self.w -= alpha * ((X.T @ error) + lambda_ * self.w) / m
             self.b -= alpha * np.sum(error) / m
+
+            cost_iter = self.cost(X, y)
+            if self.verbose and _ % (num_iters / 10) == 0:
+                print(f"Iteration {_}: Cost = {cost_iter}")
 
     def probability(self, X):
         z = X @ self.w + self.b
